@@ -152,6 +152,8 @@ WSGI_APPLICATION = 'unnamed_project.wsgi.application'
 DATABASES_URL = 'postgres://rqgehybrogueht:dc2330968da00894c68ee3b186f4e5532cf2727285ff007b5c35663fe267da83@ec2-54-167-152-185.compute-1.amazonaws.com:5432/d230gc92pkm9hs'
 
 
+DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
@@ -162,6 +164,9 @@ DATABASES = {
         'PORT': '5432',
     }
 }
+
+db_from_env = dj_database_url.config()
+DATABASES['default'].update(db_from_env)
 
 # Password validation
 # https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators
