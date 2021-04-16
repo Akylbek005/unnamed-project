@@ -17,7 +17,7 @@ class ExcelFile(models.Model):
     file_name = models.CharField(max_length=64, default='')
 
     def __str__(self):
-        return f'{self.user}, {self.excel_file}'
+        return f'{self.excel_file}'
 
     def save(self, *args, **kwargs):
         self.file_name = self.excel_file.name
@@ -27,38 +27,38 @@ class ExcelFile(models.Model):
 class Report(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     excel_file = models.ForeignKey(ExcelFile, on_delete=models.CASCADE)
-    tnved = models.CharField(max_length=64)
-    full_product_name = models.CharField(max_length=128)
-    trademark = models.CharField(max_length=64)
-    article_type = models.CharField(max_length=64)
-    article_value = models.CharField(max_length=64)
-    product_type = models.CharField(max_length=64)
-    color = models.CharField(max_length=64)
-    target_gender = models.CharField(max_length=64)
-    clothing_type = models.CharField(max_length=64)
-    clothing_value = models.CharField(max_length=64)
-    composition = models.CharField(max_length=64)
-    standard_no = models.CharField(max_length=64)
-    status = models.CharField(max_length=64)
+    tnved = models.CharField(max_length=64, default='')
+    full_product_name = models.CharField(max_length=128, default='')
+    trademark = models.CharField(max_length=64, default='')
+    article_type = models.CharField(max_length=64, default='')
+    article_value = models.CharField(max_length=64, default='')
+    product_type = models.CharField(max_length=64, default='')
+    color = models.CharField(max_length=64, default='')
+    target_gender = models.CharField(max_length=64, default='')
+    clothing_type = models.CharField(max_length=64, default='')
+    clothing_value = models.CharField(max_length=64, default='')
+    composition = models.CharField(max_length=64, default='')
+    standard_no = models.CharField(max_length=64, default='')
+    status = models.CharField(max_length=64, default='')
 
     def __str__(self):
         return f'{self.user}, {self.excel_file}'
 
 
 class AddProductToExcelFile(models.Model):
-    tnved = models.CharField(max_length=64)
-    full_product_name = models.CharField(max_length=128)
-    trademark = models.CharField(max_length=64)
-    article_type = models.CharField(max_length=64)
-    article_value = models.CharField(max_length=64)
-    product_type = models.CharField(max_length=64)
-    color = models.CharField(max_length=64)
-    target_gender = models.CharField(max_length=64)
+    tnved = models.CharField(max_length=64, default='')
+    full_product_name = models.CharField(max_length=128, default='')
+    trademark = models.CharField(max_length=64, default='')
+    article_type = models.CharField(max_length=64, default='')
+    article_value = models.CharField(max_length=64, default='')
+    product_type = models.CharField(max_length=64, default='')
+    color = models.CharField(max_length=64, default='')
+    target_gender = models.CharField(max_length=64, default='')
     clothing_type = models.CharField(max_length=64, default=0)
     clothing_value = models.CharField(max_length=64, default=0)
-    composition = models.CharField(max_length=64)
-    standard_no = models.CharField(max_length=64)
-    status = models.CharField(max_length=64)
+    composition = models.CharField(max_length=64, default='')
+    standard_no = models.CharField(max_length=64, default='')
+    status = models.CharField(max_length=64, default='')
 
     def __str__(self):
         return f"{self.full_product_name}"

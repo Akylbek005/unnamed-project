@@ -52,6 +52,7 @@ INSTALLED_APPS = [
     'accountant.apps.AccountantConfig',
     'news.apps.NewsConfig',
     'reports.apps.ReportsConfig',
+    'vlad.apps.VladConfig',
 
     # cors
     'corsheaders',

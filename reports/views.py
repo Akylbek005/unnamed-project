@@ -1,4 +1,5 @@
 from django_filters.rest_framework import DjangoFilterBackend
+import os
 
 from rest_framework import status
 from rest_framework import filters
@@ -38,6 +39,17 @@ class ExcelFileViewSet(ModelViewSet):
         serializer.save(user=self.request.user)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
+    def destroy(self, request, *args, **kwargs):
+        serializer = self.serializer_class(data=self.request.data)
+        id_file = serializer.initial_data['excel_id']
+        name_file = ''
+        for i in ExcelFile.objects.filter(id=id_file):
+            name_file += str(i)
+        os.remove('media/' + name_file)
+        instance = self.get_object()
+        self.perform_destroy(instance)
+        return Response(status=status.HTTP_204_NO_CONTENT)
+
 
 class ReportViewSet(ModelViewSet):
     permission_classes = (IsAuthenticated, )
@@ -50,19 +62,24 @@ class ReportViewSet(ModelViewSet):
         return Response(serializer.data, status=status.HTTP_200_OK)
 
 
+def check_on_num(request_read):
+    full_url = str(request_read)
+    id_exel_file = ''
+    for i in range(4, 11):
+        if full_url[-i].isdigit() is True:
+            id_exel_file += full_url[-i]
+        else:
+            break
+    return id_exel_file[::-1]
+
+
 class ReportListView(generics.ListAPIView):
     queryset = Report.objects.all()
     serializer_class = ReportSerializer
-    # filter_backends = [DjangoFilterBackend, filters.SearchFilter]
-    # filterset_fields = ['user', 'excel_file']
-    # search_fields = ['user', 'excel_file']
 
     def list(self, request, *args, **kwargs):
-        body = str(request.read)
-        body1 = body[-4]
-        body2 = body[-5]
-        body = body2 + body1
-        report = self.queryset.filter(excel_file=body)
+        exel_file = check_on_num(request.read)
+        report = self.queryset.filter(excel_file=exel_file)
         serializer = self.serializer_class(report, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
 

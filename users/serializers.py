@@ -118,6 +118,7 @@ class LoginSerializer(serializers.Serializer):
     email = serializers.CharField(max_length=256)
     password = serializers.CharField(max_length=128, write_only=True)
     token = serializers.CharField(max_length=256, read_only=True)
+    is_vlad = serializers.BooleanField(read_only=True)
 
     def validate(self, data):
         email = data.get('email', None)

@@ -68,6 +68,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     is_staff = models.BooleanField(default=False)
     is_active = models.BooleanField(default=False)
     is_superuser = models.BooleanField(default=False)
+    is_vlad = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -77,7 +78,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     objects = MyUserManager()
 
     def __str__(self):
-        return '%s %s' % (self.first_name, self.last_name)
+        return f'{self.last_name} {self.first_name}'
 
     @property
     def token(self):
@@ -96,12 +97,4 @@ class User(AbstractBaseUser, PermissionsMixin):
             'exp': dt.utcfromtimestamp(dt.timestamp())
         }, settings.SECRET_KEY, algorithm='HS256')
         return token.decode('utf-8')
-
-
-# class FileExel:
-#     file_exel_user = models.ForeignKey(User, on_delete=models.CASCADE)
-#
-#     class Meta:
-#         verbose_name = 'Файл пользователя'
-#         verbose_name_plural = 'Файл пользователей'
 

@@ -69,6 +69,7 @@ class RegistrationAPIView(generics.GenericAPIView):
         serializer.save()
         user_data = serializer.data
         user = User.objects.get(email=user_data['email'])
+        print(user)
         token = RefreshToken.for_user(user).access_token
         relativeLink = reverse('users:email-verify')
         absurl = 'http://localhost:3000/auth/activate/' + str(token)
@@ -169,6 +170,10 @@ class LoginAPIView(APIView):
     def post(self, request):
         serializer = self.serializer_class(data=request.data)
         serializer.is_valid(raise_exception=True)
+        # all_ = User.objects.filter(email=request.data['email'])
+        # asd = ''
+        # for i in all_:
+        #     asd += str(i)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
 
